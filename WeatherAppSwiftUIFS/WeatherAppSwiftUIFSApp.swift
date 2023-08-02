@@ -13,7 +13,9 @@ struct WeatherAppSwiftUIFSApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            let weatherService = WeatherService()
+            let viewModel = LocalWeatherViewModel(weatherService: weatherService)
+            LocalWeatherView(viewModel: viewModel)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
