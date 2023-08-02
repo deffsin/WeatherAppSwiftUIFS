@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15494B862A7AA91200EEF456 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15494B852A7AA91200EEF456 /* Test.swift */; };
 		15C3FC0B2A793CD500249BC1 /* WeatherAppSwiftUIFSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C3FC0A2A793CD500249BC1 /* WeatherAppSwiftUIFSApp.swift */; };
 		15C3FC0D2A793CD500249BC1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C3FC0C2A793CD500249BC1 /* ContentView.swift */; };
 		15C3FC0F2A793CD700249BC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15C3FC0E2A793CD700249BC1 /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		15494B852A7AA91200EEF456 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		15C3FC072A793CD500249BC1 /* WeatherAppSwiftUIFS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherAppSwiftUIFS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15C3FC0A2A793CD500249BC1 /* WeatherAppSwiftUIFSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAppSwiftUIFSApp.swift; sourceTree = "<group>"; };
 		15C3FC0C2A793CD500249BC1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 			children = (
 				15C3FC0A2A793CD500249BC1 /* WeatherAppSwiftUIFSApp.swift */,
 				15C3FC0C2A793CD500249BC1 /* ContentView.swift */,
+				15494B852A7AA91200EEF456 /* Test.swift */,
 				15C3FC0E2A793CD700249BC1 /* Assets.xcassets */,
 				15C3FC132A793CD700249BC1 /* Persistence.swift */,
 				15C3FC152A793CD700249BC1 /* WeatherAppSwiftUIFS.xcdatamodeld */,
@@ -145,6 +148,7 @@
 			files = (
 				15C3FC142A793CD700249BC1 /* Persistence.swift in Sources */,
 				15C3FC0D2A793CD500249BC1 /* ContentView.swift in Sources */,
+				15494B862A7AA91200EEF456 /* Test.swift in Sources */,
 				15C3FC172A793CD700249BC1 /* WeatherAppSwiftUIFS.xcdatamodeld in Sources */,
 				15C3FC0B2A793CD500249BC1 /* WeatherAppSwiftUIFSApp.swift in Sources */,
 			);
