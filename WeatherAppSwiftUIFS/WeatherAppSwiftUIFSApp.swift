@@ -10,13 +10,13 @@ import SwiftUI
 @main
 struct WeatherAppSwiftUIFSApp: App {
     let persistenceController = PersistenceController.shared
+    let store = Store()
 
     var body: some Scene {
         WindowGroup {
-            let weatherService = WeatherService()
-            let viewModel = LocalWeatherViewModel(weatherService: weatherService)
-            LocalWeatherView(viewModel: viewModel)
+            WeatherListView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environmentObject(store)
         }
     }
 }
