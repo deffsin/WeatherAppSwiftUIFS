@@ -10,43 +10,49 @@ import CoreData
 
 class Store: ObservableObject {
     
-    @Published var weatherList: [WeatherViewModel] = [WeatherViewModel]()
-    let context: NSManagedObjectContext = PersistenceController.shared.container.viewContext
+    @Published var weatherList = [WeatherViewModel]()
+    
+    private var coreDataHandler = CoreDataHandler()
+    private var weatherAPIHandler = WeatherAPIHandler()
     
     init() {
-        loadCitiesFromCoreData()
+        getWeatherForAllCities()
     }
     
-    func addWeather(_ weather: WeatherViewModel) {
-        weatherList.append(weather)
+    func getWeatherForAllCities() {
+        let cities = coreDataHandler.fetchAllCities()
+        
+        cities.forEach { city in
+            if let cityName = city.cityName {
+                getWeatherForCity(city: cityName)
+            }
+        }
     }
-
-    func loadCitiesFromCoreData() {
-        let fetchRequest: NSFetchRequest<City> = City.fetchRequest()
-        do {
-            let cities = try context.fetch(fetchRequest)
-            for city in cities {
-                if let cityName = city.cityName {
-                    updateWeatherForCity(cityName)
+    
+    func getWeatherForCity(city: String) {
+        weatherAPIHandler.fetchWeatherForCity(city: city) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let weatherVM):
+                    self?.weatherList.append(weatherVM)
+                case .failure(let error):
+                    print("Failed to get weather for city: \(error)")
                 }
             }
-        } catch let error {
-            print("Error loading cities from CoreData: \(error)")
         }
     }
-
-    func updateWeatherForCity(_ city: String) {
-        WeatherService().getWeatherByCity(city: city) { (result) in
-            switch result {
-                case .success(let weather):
-                    DispatchQueue.main.async {
-                        let weatherVM = WeatherViewModel(weather: weather)
-                        self.weatherList.append(weatherVM)
-                    }
-                case .failure(let error):
-                    print("Error fetching weather for the city \(city): \(error)")
+    
+    func deleteAllCities() { // for the DeleteAllCitiesView in Others, just for this purpose to clear all data in CD
+        coreDataHandler.deleteAllCities()
+        weatherList.removeAll()
+    }
+    
+    func addCity(city: String) {
+            if !coreDataHandler.cityExists(name: city) {
+                coreDataHandler.addCity(cityName: city)
+                // getWeatherForCity(city: city)
+            } else {
+                print("City already exists!")
             }
         }
-    }
-
 }

@@ -13,16 +13,17 @@ class AddWeatherViewModel: ObservableObject {
     
     var city: String = ""
     let context: NSManagedObjectContext = PersistenceController.shared.container.viewContext
-    
+    let coreDataHandler = CoreDataHandler()
+    let weatherService = WeatherService()
+
     func save(completion: @escaping (WeatherViewModel?, Error?) -> Void) {
-        if !cityExists(name: city) {
-            WeatherService().getWeatherByCity(city: city) { (result) in
+        if !coreDataHandler.cityExists(name: city) {
+            weatherService.getWeatherByCity(city: city) { (result) in
                 switch result {
                 case .success(let weather):
                     DispatchQueue.main.async {
-                        let cityEntity = City(context: self.context)
-                        cityEntity.cityName = self.city
-                        
+                        self.coreDataHandler.addCity(cityName: self.city)
+
                         do {
                             try self.context.save()
                             completion(WeatherViewModel(weather: weather), nil)
@@ -40,12 +41,5 @@ class AddWeatherViewModel: ObservableObject {
             print("City already exits!")
             completion(nil, NSError(domain: "", code: 409, userInfo: [NSLocalizedDescriptionKey: "City already exists!"]))
         }
-    }
-    
-    func cityExists(name: String) -> Bool {
-        let fetchRequest: NSFetchRequest<City> = City.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "cityName == %@", name)
-        let count = try? context.count(for: fetchRequest)
-        return (count ?? 0) > 0
     }
 }

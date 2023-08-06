@@ -23,14 +23,13 @@ struct AddCityView: View {
                 Button("Save") {
                     viewModel.save { (weather, error) in
                         if let weather = weather {
-                            store.addWeather(weather)
+                            store.addCity(city: viewModel.city)
                             presentationMode.wrappedValue.dismiss()
                         } else if let error = error {
                             print("Error: \(error.localizedDescription)")
                         }
                     }
                 }
-
                 .padding(10)
                 .frame(maxWidth: UIScreen.main.bounds.width/4)
                 .foregroundColor(Color.white)
@@ -56,5 +55,3 @@ struct AddCityView_Previews: PreviewProvider {
         AddCityView().environmentObject(Store())
     }
 }
-
-// test
