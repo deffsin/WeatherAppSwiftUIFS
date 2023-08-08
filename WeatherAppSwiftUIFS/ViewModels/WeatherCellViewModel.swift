@@ -8,7 +8,7 @@
 import SwiftUI
 import Foundation
 
-struct WeatherViewModel {
+struct WeatherCellViewModel {
     
     let weather: Weather
     

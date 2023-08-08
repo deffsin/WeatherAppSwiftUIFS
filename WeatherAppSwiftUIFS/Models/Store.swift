@@ -9,27 +9,25 @@ import Foundation
 import CoreData
 
 class Store: ObservableObject {
-    
-    @Published var weatherList = [WeatherViewModel]()
+    @Published var weatherList = [WeatherCellViewModel]()
     
     private var coreDataHandler = CoreDataHandler()
     private var weatherAPIHandler = WeatherAPIHandler()
-    
+
     init() {
         getWeatherForAllCities()
     }
-    
-    func getWeatherForAllCities() {
+
+    private func getWeatherForAllCities() {
         let cities = coreDataHandler.fetchAllCities()
-        
         cities.forEach { city in
             if let cityName = city.cityName {
                 getWeatherForCity(city: cityName)
             }
         }
     }
-    
-    func getWeatherForCity(city: String) {
+
+    private func getWeatherForCity(city: String) {
         weatherAPIHandler.fetchWeatherForCity(city: city) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
@@ -41,18 +39,4 @@ class Store: ObservableObject {
             }
         }
     }
-    
-    func deleteAllCities() { // for the DeleteAllCitiesView in Others, just for this purpose to clear all data in CD
-        coreDataHandler.deleteAllCities()
-        weatherList.removeAll()
-    }
-    
-    func addCity(city: String) {
-            if !coreDataHandler.cityExists(name: city) {
-                coreDataHandler.addCity(cityName: city)
-                // getWeatherForCity(city: city)
-            } else {
-                print("City already exists!")
-            }
-        }
 }

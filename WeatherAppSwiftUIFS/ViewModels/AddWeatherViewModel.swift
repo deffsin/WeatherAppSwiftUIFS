@@ -10,36 +10,36 @@ import Foundation
 import CoreData
 
 class AddWeatherViewModel: ObservableObject {
-    
-    var city: String = ""
-    let context: NSManagedObjectContext = PersistenceController.shared.container.viewContext
-    let coreDataHandler = CoreDataHandler()
-    let weatherService = WeatherService()
+    @Published var city: String = ""
+    @Published var error: Error?
 
-    func save(completion: @escaping (WeatherViewModel?, Error?) -> Void) {
+    private let coreDataHandler = CoreDataHandler()
+    private let weatherService = WeatherService()
+    private let context: NSManagedObjectContext = PersistenceController.shared.container.viewContext
+
+    func save(completion: @escaping (Bool) -> Void) {
         if !coreDataHandler.cityExists(name: city) {
             weatherService.getWeatherByCity(city: city) { (result) in
                 switch result {
                 case .success(let weather):
                     DispatchQueue.main.async {
                         self.coreDataHandler.addCity(cityName: self.city)
-
                         do {
                             try self.context.save()
-                            completion(WeatherViewModel(weather: weather), nil)
+                            completion(true)
                         } catch {
-                            print("Failed saving to CoreData!")
-                            completion(nil, error)
+                            self.error = error
+                            completion(false)
                         }
                     }
                 case .failure(let error):
-                    print(error)
-                    completion(nil, error)
+                    self.error = error
+                    completion(false)
                 }
             }
         } else {
-            print("City already exits!")
-            completion(nil, NSError(domain: "", code: 409, userInfo: [NSLocalizedDescriptionKey: "City already exists!"]))
+            self.error = NSError(domain: "", code: 409, userInfo: [NSLocalizedDescriptionKey: "City already exists!"])
+            completion(false)
         }
     }
 }

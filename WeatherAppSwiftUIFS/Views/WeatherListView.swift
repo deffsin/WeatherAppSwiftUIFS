@@ -9,40 +9,43 @@ import SwiftUI
 
 struct WeatherListView: View {
 
-    @EnvironmentObject var store: Store
-    @State private var addCity = false
+    @ObservedObject var viewModel: WeatherListViewModel
     
     var body: some View {
         ZStack {
             ScrollView {
                 VStack(spacing: 10) {
-                    ForEach(store.weatherList, id: \.id) { weather in
+                    ForEach(viewModel.store.weatherList, id: \.id) { weather in
                         WeatherCell(weather: weather)
                     }
                     .padding([.trailing, .leading], 20)
                 }
             }
         }
-        .sheet(isPresented: $addCity) {
-            AddCityView().environmentObject(store)
+        .sheet(isPresented: $viewModel.addCity) {
+            AddCityView(viewModel: AddWeatherViewModel()).environmentObject(viewModel.store)
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    
-                    addCity.toggle()
-                }) {
-                    Image(systemName: "plus")
-                }
+                buildAddButton()
             }
         }
         .navigationTitle("Cities")
         .embedInNavigationView()
     }
+    
+    // Add("plus") button
+    @ViewBuilder private func buildAddButton() -> some View {
+        Button(action: {
+            viewModel.toggleAddCity()
+        }) {
+            Image(systemName: "plus")
+        }
+    }
 }
 
 struct WeatherListView_Previews: PreviewProvider {
     static var previews: some View {
-        WeatherListView().environmentObject(Store())
+        WeatherListView(viewModel: WeatherListViewModel(store: Store()))
     }
 }

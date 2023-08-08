@@ -8,50 +8,47 @@
 import SwiftUI
 
 struct AddCityView: View {
-    
     @Environment(\.presentationMode) private var presentationMode
-    @EnvironmentObject var store: Store
-    @StateObject private var viewModel = AddWeatherViewModel()
-    
+    @EnvironmentObject var store: Store // viewModel??
+    @StateObject var viewModel: AddWeatherViewModel // observed??
+
     var body: some View {
-        
         VStack {
             VStack(spacing: 20) {
-                TextField("Enter city name", text: $viewModel.city)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                
-                Button("Save") {
-                    viewModel.save { (weather, error) in
-                        if let weather = weather {
-                            store.addCity(city: viewModel.city)
-                            presentationMode.wrappedValue.dismiss()
-                        } else if let error = error {
-                            print("Error: \(error.localizedDescription)")
-                        }
-                    }
-                }
-                .padding(10)
-                .frame(maxWidth: UIScreen.main.bounds.width/4)
-                .foregroundColor(Color.white)
-                .background(Color.blue)
-                .clipShape(RoundedRectangle(cornerRadius: 15))
+                buildEnterCity()
+                buildSaveButton()
             }
             .padding()
             .frame(maxWidth: .infinity, maxHeight: 150)
             .background(Color.pink.opacity(0.1))
             .clipShape(RoundedRectangle(cornerRadius: 20))
             
-         Spacer()
-            
+            Spacer()
         }
         .padding()
         .navigationTitle("Add City")
         .embedInNavigationView()
     }
-}
+    
+    @ViewBuilder private func buildEnterCity() -> some View {
+        TextField("Enter city name", text: $viewModel.city)
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+    }
 
-struct AddCityView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddCityView().environmentObject(Store())
+    @ViewBuilder private func buildSaveButton() -> some View {
+        Button("Save") {
+            viewModel.save { success in
+                if success {
+                    presentationMode.wrappedValue.dismiss()
+                } else if let error = viewModel.error {
+                    print("Error: \(error.localizedDescription)")
+                }
+            }
+        }
+        .padding(10)
+        .frame(maxWidth: UIScreen.main.bounds.width/4)
+        .foregroundColor(Color.white)
+        .background(Color.blue)
+        .clipShape(RoundedRectangle(cornerRadius: 15))
     }
 }

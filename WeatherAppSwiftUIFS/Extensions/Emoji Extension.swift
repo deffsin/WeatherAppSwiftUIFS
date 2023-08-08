@@ -5,7 +5,7 @@
 //  Created by Denis Sinitsa on 03.08.2023.
 //
 
-extension WeatherViewModel {
+extension WeatherCellViewModel {
     var weatherEmoji: String {
         switch description.lowercased() {
         case "clear":
