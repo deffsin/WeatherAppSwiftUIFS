@@ -7,10 +7,10 @@
 
 import Foundation
 class WeatherAPIHandler {
-    let weatherService = WeatherService()
+    let weatherAPIService = WeatherAPIService()
     
     func fetchWeatherForCity(city: String, completion: @escaping ((Result<WeatherCellViewModel, NetworkError>) -> Void)) {
-        weatherService.getWeatherByCity(city: city) { result in
+        weatherAPIService.getWeatherByCity(city: city) { result in
             switch result {
             case .success(let weather):
                 let weatherVM = WeatherCellViewModel(weather: weather)

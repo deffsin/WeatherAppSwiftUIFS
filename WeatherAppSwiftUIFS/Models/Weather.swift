@@ -8,13 +8,13 @@
 import Foundation
 
 struct WeatherResponse: Decodable {
-    let name: String
+    let city: String
     var weather: Weather
     let icon: [WeatherIcon]
     let sys: Sys
     
     private enum CodingKeys: String, CodingKey {
-        case name
+        case city = "name"
         case weather = "main"
         case icon = "weather"
         case sys = "sys"
@@ -27,7 +27,7 @@ struct WeatherResponse: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        name = try container.decode(String.self, forKey: .name)
+        city = try container.decode(String.self, forKey: .city)
         icon = try container.decode([WeatherIcon].self, forKey: .icon)
         sys = try container.decode(Sys.self, forKey: .sys)
         
@@ -35,10 +35,10 @@ struct WeatherResponse: Decodable {
         let temperature = try weatherContainer.decode(Double.self, forKey: .temperature)
         let weatherDescription = icon.first?.description ?? ""
         
-        weather = Weather(city: name, country: sys.country, description: weatherDescription, temperature: temperature, icon: icon.first!.icon, sunrise: sys.sunrise, sunset: sys.sunset)
+        weather = Weather(city: city, country: sys.country, description: weatherDescription, temperature: temperature, icon: icon.first!.icon, sunrise: sys.sunrise, sunset: sys.sunset)
     }
-
 }
+
 
 struct Sys: Decodable {
     

@@ -14,12 +14,12 @@ class AddWeatherViewModel: ObservableObject {
     @Published var error: Error?
 
     private let coreDataHandler = CoreDataHandler()
-    private let weatherService = WeatherService()
+    private let weatherAPIService = WeatherAPIService()
     private let context: NSManagedObjectContext = PersistenceController.shared.container.viewContext
 
     func save(completion: @escaping (Bool) -> Void) {
         if !coreDataHandler.cityExists(name: city) {
-            weatherService.getWeatherByCity(city: city) { (result) in
+            weatherAPIService.getWeatherByCity(city: city) { (result) in
                 switch result {
                 case .success(let weather):
                     DispatchQueue.main.async {
