@@ -15,13 +15,13 @@ enum NetworkError: Error {
 }
 
 class NetworkService {
-    func fetch<T: Decodable>(urlRequest: URLRequest, completion: @escaping ((Result<T, NetworkError>) -> Void)) {
+    func makeAPICall<Model: Decodable>(urlRequest: URLRequest, completion: @escaping ((Result<Model, NetworkError>) -> Void)) {
         URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
             guard let data = data, error == nil else {
                 return completion(.failure(.noData))
             }
             do {
-                let model = try JSONDecoder().decode(T.self, from: data)
+                let model = try JSONDecoder().decode(Model.self, from: data)
                 completion(.success(model))
             } catch {
                 print("Decoding error: \(error)")

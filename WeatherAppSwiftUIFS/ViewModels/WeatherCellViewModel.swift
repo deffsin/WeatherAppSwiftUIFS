@@ -38,7 +38,7 @@ struct WeatherCellViewModel {
         return weather.description
     }
     
-    var icon: String {
-        return weather.icon
-    }
+    // var icon: String {
+    //     return weather.icon
+    // }
 }

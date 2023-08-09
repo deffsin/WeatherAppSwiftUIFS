@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct WeatherListView: View {
-
-    @ObservedObject var viewModel: WeatherListViewModel
+    @StateObject var viewModel: WeatherListViewModel
     
     var body: some View {
         ZStack {

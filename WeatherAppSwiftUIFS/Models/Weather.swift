@@ -9,39 +9,36 @@ import Foundation
 
 struct WeatherResponse: Decodable {
     let city: String
-    var weather: Weather
-    let icon: [WeatherIcon]
+    let main: WeatherMain
+    let weather: [WeatherIcon]
     let sys: Sys
-    
+
     private enum CodingKeys: String, CodingKey {
         case city = "name"
-        case weather = "main"
-        case icon = "weather"
-        case sys = "sys"
+        case main
+        case weather
+        case sys
     }
-    
-    enum WeatherKeys: String, CodingKey {
-        case temperature = "temp"
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        city = try container.decode(String.self, forKey: .city)
-        icon = try container.decode([WeatherIcon].self, forKey: .icon)
-        sys = try container.decode(Sys.self, forKey: .sys)
-        
-        let weatherContainer = try container.nestedContainer(keyedBy: WeatherKeys.self, forKey: .weather)
-        let temperature = try weatherContainer.decode(Double.self, forKey: .temperature)
-        let weatherDescription = icon.first?.description ?? ""
-        
-        weather = Weather(city: city, country: sys.country, description: weatherDescription, temperature: temperature, icon: icon.first!.icon, sunrise: sys.sunrise, sunset: sys.sunset)
+
+    func toWeather() -> Weather {
+        return Weather(
+            city: self.city,
+            country: self.sys.country,
+            description: self.weather.first?.description ?? "",
+            temperature: self.main.temp,
+            // icon: self.weather.first?.icon ?? "",
+            sunrise: self.sys.sunrise,
+            sunset: self.sys.sunset
+        )
     }
 }
 
 
+struct WeatherMain: Decodable {
+    let temp: Double
+}
+
 struct Sys: Decodable {
-    
     let country: String
     let sunrise: Date
     let sunset: Date
@@ -54,14 +51,12 @@ struct Sys: Decodable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let sunriseTimeInterval = try container.decode(Int32.self, forKey: .sunrise)
-        let sunsetTimeInterval = try container.decode(Int32.self, forKey: .sunset)
+        let sunriseTimeInterval = try container.decode(Int.self, forKey: .sunrise)
+        let sunsetTimeInterval = try container.decode(Int.self, forKey: .sunset)
         country = try container.decode(String.self, forKey: .country)
         sunrise = Date(timeIntervalSince1970: TimeInterval(sunriseTimeInterval))
         sunset = Date(timeIntervalSince1970: TimeInterval(sunsetTimeInterval))
     }
-
-    
 }
 
 struct WeatherIcon: Decodable {
@@ -70,13 +65,14 @@ struct WeatherIcon: Decodable {
     let icon: String
 }
 
+
 // если хочу что то новое отобразить то тут надо будет это добавить!!!
 struct Weather: Decodable {
     let city: String
     let country: String
     let description: String
     let temperature: Double
-    let icon: String
+    // let icon: String
     let sunrise: Date
     let sunset: Date
 }
