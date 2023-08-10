@@ -9,12 +9,13 @@ import SwiftUI
 
 struct WeatherListView: View {
     @StateObject var viewModel: WeatherListViewModel
+    @EnvironmentObject var store: Store // !!!
     
     var body: some View {
         ZStack {
             ScrollView {
                 VStack(spacing: 10) {
-                    ForEach(viewModel.store.weatherList, id: \.id) { weather in
+                    ForEach(store.weatherList) { weather in
                         WeatherCell(weather: weather)
                     }
                     .padding([.trailing, .leading], 20)

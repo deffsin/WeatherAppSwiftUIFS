@@ -8,11 +8,11 @@
 import SwiftUI
 import Foundation
 
-struct WeatherCellViewModel {
+struct WeatherCellViewModel: Identifiable {
     
     let weather: Weather
     
-    let id = UUID()
+    var id = UUID()
     
     var temperature: Double {
         return weather.temperature
