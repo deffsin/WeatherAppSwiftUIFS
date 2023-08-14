@@ -13,7 +13,7 @@ class AddWeatherViewModel: ObservableObject {
     @Published var city: String = ""
     @Published var error: Error?
 
-    private let coreDataHandler = CoreDataHandler()
+    private let coreDataHandler = CoreDataService()
     private let weatherAPIService = WeatherAPIService()
     private let context: NSManagedObjectContext = PersistenceController.shared.container.viewContext
 

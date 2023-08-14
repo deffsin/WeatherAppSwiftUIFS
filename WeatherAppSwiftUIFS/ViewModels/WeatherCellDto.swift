@@ -8,9 +8,13 @@
 import SwiftUI
 import Foundation
 
-struct WeatherCellViewModel: Identifiable {
+struct WeatherCellDto: Identifiable {
     
     let weather: Weather
+    
+    init(weather: Weather) {
+        self.weather = weather
+    }
     
     var id = UUID()
     

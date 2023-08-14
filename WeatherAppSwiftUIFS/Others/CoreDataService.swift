@@ -7,7 +7,7 @@
 
 import CoreData
 
-class CoreDataHandler {
+class CoreDataService {
     let context = PersistenceController.shared.container.viewContext
 
     func fetchAllCities() -> [City] {

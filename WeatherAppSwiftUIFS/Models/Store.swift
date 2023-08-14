@@ -9,9 +9,9 @@ import Foundation
 import CoreData
 
 class Store: ObservableObject {
-    @Published var weatherList = [WeatherCellViewModel]()
+    @Published var weatherList = [WeatherCellDto]()
     
-    private var coreDataHandler = CoreDataHandler()
+    private var coreDataHandler = CoreDataService()
     private var weatherAPIHandler = WeatherAPIHandler()
 
     init() {
@@ -31,7 +31,8 @@ class Store: ObservableObject {
         weatherAPIHandler.fetchWeatherForCity(city: city) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
-                case .success(let weatherVM):
+                case .success(let weather):
+                    let weatherVM = WeatherCellDto(weather: weather) //
                     self?.weatherList.append(weatherVM)
                 case .failure(let error):
                     print("Failed to get weather for city: \(error)")

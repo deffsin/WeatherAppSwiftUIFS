@@ -9,7 +9,7 @@ import SwiftUI
 
 struct WeatherCell: View {
     
-    let weather: WeatherCellViewModel
+    let weather: WeatherCellDto
     
     var body: some View {
         HStack {
