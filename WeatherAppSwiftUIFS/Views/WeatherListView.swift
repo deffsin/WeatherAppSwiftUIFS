@@ -46,6 +46,6 @@ struct WeatherListView: View {
 
 struct WeatherListView_Previews: PreviewProvider {
     static var previews: some View {
-        WeatherListView(viewModel: WeatherListViewModel(store: Store()))
+        WeatherListView(viewModel: WeatherListViewModel(store: Store(fetchAllCitiesWeatherUseCase: FetchAllCitiesWeatherUseCase(coreDataService: CoreDataService(), fetchSingleCityWeatherUseCase: FetchSingleCityWeatherUseCase(fetchWeatherUseCase: FetchWeatherUseCase())), fetchSingleCityWeatherUseCase: FetchSingleCityWeatherUseCase(fetchWeatherUseCase: FetchWeatherUseCase()))))
     }
 }

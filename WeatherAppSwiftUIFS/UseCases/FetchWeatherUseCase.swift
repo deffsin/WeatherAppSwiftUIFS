@@ -6,7 +6,8 @@
 //
 
 import Foundation
-class WeatherAPIHandler {
+
+class FetchWeatherUseCase {
     let weatherAPIService = WeatherAPIService()
     
     func fetchWeatherForCity(city: String, completion: @escaping ((Result<Weather, NetworkError>) -> Void)) {

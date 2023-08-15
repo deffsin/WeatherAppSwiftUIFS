@@ -8,6 +8,7 @@
 import SwiftUI
 import Foundation
 
+// if this is no longer a ViewModel, then where i should store it? Should i create a folder for that?
 struct WeatherCellDto: Identifiable {
     
     let weather: Weather
