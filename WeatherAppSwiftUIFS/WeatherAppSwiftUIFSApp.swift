@@ -10,11 +10,19 @@ import SwiftUI
 @main
 struct WeatherAppSwiftUIFSApp: App {
     let persistenceController = PersistenceController.shared
-    let store = Store(fetchAllCitiesWeatherUseCase: FetchAllCitiesWeatherUseCase(coreDataService: CoreDataService(), fetchSingleCityWeatherUseCase: FetchSingleCityWeatherUseCase(fetchWeatherUseCase: FetchWeatherUseCase())), fetchSingleCityWeatherUseCase: FetchSingleCityWeatherUseCase(fetchWeatherUseCase: FetchWeatherUseCase()))
+    let store: Store
+
+    init() {
+        let coreDataService = CoreDataService()
+        let cityWeatherFetcher = CityWeatherFetcher()
+        let getAllCitiesWeather = GetAllCitiesWeather(coreDataService: coreDataService, cityWeatherFetcher: cityWeatherFetcher)
+
+        self.store = Store(getAllCitiesWeather: getAllCitiesWeather)
+    }
 
     var body: some Scene {
         WindowGroup {
-            WeatherListView(viewModel: WeatherListViewModel(store: Store(fetchAllCitiesWeatherUseCase: FetchAllCitiesWeatherUseCase(coreDataService: CoreDataService(), fetchSingleCityWeatherUseCase: FetchSingleCityWeatherUseCase(fetchWeatherUseCase: FetchWeatherUseCase())), fetchSingleCityWeatherUseCase: FetchSingleCityWeatherUseCase(fetchWeatherUseCase: FetchWeatherUseCase()))))
+            WeatherListView(viewModel: WeatherListViewModel(store: store))
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(store)
         }

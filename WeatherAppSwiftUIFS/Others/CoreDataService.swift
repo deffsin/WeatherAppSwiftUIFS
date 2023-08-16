@@ -47,7 +47,7 @@ class CoreDataService {
     
     func cityExists(name: String) -> Bool {
         let fetchRequest: NSFetchRequest<City> = City.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "cityName == %@", name) // name???
+        fetchRequest.predicate = NSPredicate(format: "cityName == %@", name)
         let count = try? context.count(for: fetchRequest)
         return (count ?? 0) > 0
     }

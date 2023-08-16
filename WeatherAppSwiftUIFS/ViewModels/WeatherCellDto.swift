@@ -42,8 +42,4 @@ struct WeatherCellDto: Identifiable {
     var description: String {
         return weather.description
     }
-    
-    // var icon: String {
-    //     return weather.icon
-    // }
 }

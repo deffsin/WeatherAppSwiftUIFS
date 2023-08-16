@@ -46,6 +46,12 @@ struct WeatherListView: View {
 
 struct WeatherListView_Previews: PreviewProvider {
     static var previews: some View {
-        WeatherListView(viewModel: WeatherListViewModel(store: Store(fetchAllCitiesWeatherUseCase: FetchAllCitiesWeatherUseCase(coreDataService: CoreDataService(), fetchSingleCityWeatherUseCase: FetchSingleCityWeatherUseCase(fetchWeatherUseCase: FetchWeatherUseCase())), fetchSingleCityWeatherUseCase: FetchSingleCityWeatherUseCase(fetchWeatherUseCase: FetchWeatherUseCase()))))
+        let coreDataService = CoreDataService()
+        let cityWeatherFetcher = CityWeatherFetcher()
+        let getAllCitiesWeather = GetAllCitiesWeather(coreDataService: coreDataService, cityWeatherFetcher: cityWeatherFetcher)
+        let mockStore = Store(getAllCitiesWeather: getAllCitiesWeather)
+        
+        return WeatherListView(viewModel: WeatherListViewModel(store: mockStore)).environmentObject(mockStore)
     }
 }
+

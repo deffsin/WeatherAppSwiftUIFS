@@ -10,20 +10,17 @@ import CoreData
 
 class Store: ObservableObject {
     @Published var weatherList = [WeatherCellDto]()
+    private var getAllCitiesWeather: GetAllCitiesWeather // was fetchAllCitiesWeatherUseCase
 
-    private var fetchAllCitiesWeatherUseCase: FetchAllCitiesWeatherUseCase
-    private var fetchSingleCityWeatherUseCase: FetchSingleCityWeatherUseCase
-
-    init(fetchAllCitiesWeatherUseCase: FetchAllCitiesWeatherUseCase, fetchSingleCityWeatherUseCase: FetchSingleCityWeatherUseCase) {
-        self.fetchAllCitiesWeatherUseCase = fetchAllCitiesWeatherUseCase
-        self.fetchSingleCityWeatherUseCase = fetchSingleCityWeatherUseCase
-        
+    init(getAllCitiesWeather: GetAllCitiesWeather) {
+        self.getAllCitiesWeather = getAllCitiesWeather
         loadWeatherForAllCities()
     }
 
     private func loadWeatherForAllCities() {
-        fetchAllCitiesWeatherUseCase.getWeatherForAllCities{ [weak self] weatherList in
+        getAllCitiesWeather.fetchAllCityWeathers { [weak self] weatherList in // was fetchAllCitiesWeatherUseCase.getWeatherForAllCities
             self?.weatherList = weatherList
         }
     }
 }
+

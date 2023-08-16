@@ -10,6 +10,9 @@ import Foundation
 import CoreData
 
 class AddWeatherViewModel: ObservableObject {
+    @EnvironmentObject var store: Store
+    @Environment(\.presentationMode) var presentationMode
+    
     @Published var city: String = ""
     @Published var error: Error?
 

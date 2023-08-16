@@ -26,7 +26,6 @@ struct WeatherResponse: Decodable {
             country: self.sys.country,
             description: self.weather.first?.description ?? "",
             temperature: self.main.temp,
-            // icon: self.weather.first?.icon ?? "",
             sunrise: self.sys.sunrise,
             sunset: self.sys.sunset
         )

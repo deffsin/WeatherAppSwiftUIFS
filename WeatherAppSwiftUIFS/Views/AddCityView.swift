@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct AddCityView: View {
-    @Environment(\.presentationMode) private var presentationMode
-    @EnvironmentObject var store: Store // viewModel??
-    @StateObject var viewModel: AddWeatherViewModel // observed??
+    @Environment(\.presentationMode) var presentationMode
+    @StateObject var viewModel: AddWeatherViewModel
 
     var body: some View {
         VStack {
