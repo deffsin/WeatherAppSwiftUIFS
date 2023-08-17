@@ -11,7 +11,7 @@ import Foundation
 class WeatherAPIService {
     private let networkService = NetworkService()
     
-    func getWeatherByCity(city: String, completion: @escaping ((Result<Weather, NetworkError>) -> Void)) {
+    func getWeatherByCity(city: String, completion: @escaping ((Result<Weather, NetworkError>) -> Void)) { // should i change this func name???
         guard let weatherURL = Constants.Urls.weatherByCity(city: city) else {
             return completion(.failure(.badURL))
         }
