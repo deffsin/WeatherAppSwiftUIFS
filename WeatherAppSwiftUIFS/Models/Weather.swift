@@ -65,13 +65,11 @@ struct WeatherIcon: Decodable {
 }
 
 
-// если хочу что то новое отобразить то тут надо будет это добавить!!!
 struct Weather: Decodable {
     let city: String
     let country: String
     let description: String
     let temperature: Double
-    // let icon: String
     let sunrise: Date
     let sunset: Date
 }

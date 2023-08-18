@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct WeatherCell: View {
+struct WeatherCell: View { // state
     
     let weather: WeatherCellDto
     

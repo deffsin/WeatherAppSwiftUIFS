@@ -84,13 +84,13 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		151ECCD32A7C3F0400A90057 /* API */ = {
+		151ECCD32A7C3F0400A90057 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				151ECCCF2A7C3ECB00A90057 /* WeatherAPIService.swift */,
-				158B95EE2A83B6DF00B86D08 /* NetworkService.swift */,
+				156D6C192A9000D0006B0C80 /* CoreDataService */,
+				156D6C182A9000C0006B0C80 /* Network */,
 			);
-			path = API;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		15494B8B2A7AAB4F00EEF456 /* Views */ = {
@@ -112,6 +112,32 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		156D6C182A9000C0006B0C80 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				151ECCCF2A7C3ECB00A90057 /* WeatherAPIService.swift */,
+				158B95EE2A83B6DF00B86D08 /* NetworkService.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		156D6C192A9000D0006B0C80 /* CoreDataService */ = {
+			isa = PBXGroup;
+			children = (
+				158B95E22A7F061D00B86D08 /* CoreDataService.swift */,
+			);
+			path = CoreDataService;
+			sourceTree = "<group>";
+		};
+		156D6C1A2A9000EB006B0C80 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				151ECCC82A7C3E3600A90057 /* Extensions */,
+				158BCBBC2A7AE24F0081A0A0 /* Others */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		158B96292A8B832300B86D08 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,7 +151,6 @@
 			isa = PBXGroup;
 			children = (
 				151ECCD12A7C3EF200A90057 /* DeleteAllCitiesView.swift */,
-				158B95E22A7F061D00B86D08 /* CoreDataService.swift */,
 				151ECCD42A7C3F2400A90057 /* Utils.swift */,
 			);
 			path = Others;
@@ -165,10 +190,9 @@
 				158BCBBD2A7AE2BB0081A0A0 /* ViewModels */,
 				15494B8C2A7AAB9F00EEF456 /* Models */,
 				15494B8B2A7AAB4F00EEF456 /* Views */,
-				151ECCC82A7C3E3600A90057 /* Extensions */,
-				151ECCD32A7C3F0400A90057 /* API */,
+				151ECCD32A7C3F0400A90057 /* Services */,
 				158B96292A8B832300B86D08 /* UseCases */,
-				158BCBBC2A7AE24F0081A0A0 /* Others */,
+				156D6C1A2A9000EB006B0C80 /* Shared */,
 				15C3FC152A793CD700249BC1 /* WeatherAppSwiftUIFS.xcdatamodeld */,
 				15C3FC0E2A793CD700249BC1 /* Assets.xcassets */,
 				15494B912A7AB27F00EEF456 /* Info.plist */,
