@@ -2,31 +2,20 @@
 //  WeatherListViewModel.swift
 //  WeatherAppSwiftUIFS
 //
-//  Created by Denis Sinitsa on 02.08.2023.
+//  Created by Denis Sinitsa on 08.08.2023.
 //
 
-import Foundation
-import CoreData
+import SwiftUI
 
-class WeatherListViewModel: ObservableObject {
-    private var viewContext: NSManagedObjectContext
-
-    @Published var cities: [City] = []
-
-    init(context: NSManagedObjectContext) {
-        self.viewContext = context
-        fetchCities()
+class WeatherListViewModel: ObservableObject  {
+    @Published var store: Store
+    @Published var addCity = false
+    
+    init(store: Store) {
+        self.store = store
     }
-
-    private func fetchCities() {
-        let request = City.fetchRequest() as NSFetchRequest<City>
-        let sortDescriptor = NSSortDescriptor(keyPath: \City.name, ascending: true)
-        request.sortDescriptors = [sortDescriptor]
-        
-        do {
-            cities = try viewContext.fetch(request)
-        } catch {
-            print("Error fetching cities: \(error)")
-        }
+    
+    func toggleAddCity() {
+        addCity.toggle()
     }
 }
